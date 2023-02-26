@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class OrderPage {
     private WebDriver driver;
@@ -34,16 +36,13 @@ public class OrderPage {
     //Кнопка Заказать
     private By orderButton = By.xpath(".//button[@class = 'Button_Button__ra12g Button_Middle__1CSJM']");
     //Кнопка подтверждения Да
-    private By confirmOrderButton = By.xpath(".//div[@class = 'Order_Modal__YZ-d3']/div/button[@class = 'Button_Button__ra12g Button_Middle__1CSJM']");
-    //Текст подтверждения заказа: Номер заказа: 532533.  Запишите его: пригодится, чтобы отслеживать статус
-    private By orderConfirmationText = By.className("Order_Text__2broi");
+    private By confirmOrderButton = By.xpath(".//div[@class = 'Order_Modal__YZ-d3']/div" +
+            "/button[@class = 'Button_Button__ra12g Button_Middle__1CSJM']");
+    //Текст подтверждения заказа: Заказ оформлен
+    private By confirmationHeaderText = By.className("Order_ModalHeader__3FDaJ");
 
-    //Кнопка проверки статуса
-    private By lookStatusOrderButton = By.className("Order_NextButton__1_rCA");
     //логотип Самокат
     private By logoScooterLink = By.className("Header_LogoScooter__3lsAR");
-    //Кнопка Назад формы заказа
-    //Кнопка отмены подтверждения
 
     //конструктор класса
     public OrderPage(WebDriver driver) {
@@ -120,19 +119,15 @@ public class OrderPage {
         setCommentInput(comment);
         clickOrderButton();
         clickConfirmOrderButton();
-        isOrderConfirmationTextDisplay();
     }
-    //метод получает текст сообщения об успешном создании заказа
-    public String getOrderConfirmationText() {
-        return driver.findElement(orderConfirmationText).getText();
-    }
-    //метод проверяет появление всплывающего окна с сообщением об успешном создании заказа
-    public boolean isOrderConfirmationTextDisplay() {
-        return driver.findElement(orderConfirmationText).isDisplayed();
+    //метод получает текст заголовка об успешном создании заказа
+    public String getConfirmationHeaderText() {
+        new WebDriverWait(driver, 3)
+                .until(ExpectedConditions.visibilityOf(driver.findElement(confirmationHeaderText))).isDisplayed();
+        return driver.findElement(confirmationHeaderText).getText();
     }
     //метод кликает на логотип Самоката
     public void clickLogoScooterLink() {
         driver.findElement(logoScooterLink).click();
     }
-
 }

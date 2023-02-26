@@ -1,6 +1,7 @@
 import PageObject.MainPage;
 import PageObject.OrderPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.hamcrest.MatcherAssert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +11,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+
+import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertEquals;
+
 
 @RunWith(Parameterized.class)
 public class CreateNewOrderTestClass {
@@ -26,8 +30,10 @@ public class CreateNewOrderTestClass {
     private int indexColor;
     private String comment;
     private boolean isOrderSuccess;
+
     public CreateNewOrderTestClass(String locationOrderButton, String name, String surname, String address,
-                                   String metro, String phone, String date, int indexRentTerm, int indexColor, String comment, boolean isOrderSuccess) {
+                                   String metro, String phone, String date, int indexRentTerm, int indexColor,
+                                   String comment, boolean isOrderSuccess) {
         this.locationOrderButton = locationOrderButton;
         this.name = name;
         this.surname = surname;
@@ -40,12 +46,13 @@ public class CreateNewOrderTestClass {
         this.comment = comment;
         this.isOrderSuccess = isOrderSuccess;
     }
-     @Before //для запуска Chrome
+
+    @Before //для запуска Chrome
      public void startUp() {
          WebDriverManager.chromedriver().setup();
          driver = new ChromeDriver();
      }
-/*    @Before //для запуска Firefox
+/*     @Before //для запуска Firefox
     public void startBrowser() {
         String driverPath = "C:\\webdriver\\geckodriver.exe";
         System.setProperty("webdriver.gecko.driver", driverPath);
@@ -53,13 +60,17 @@ public class CreateNewOrderTestClass {
         capabilities.setCapability("marionette", true);
         driver = new FirefoxDriver(capabilities);
     }*/
+
     @Parameterized.Parameters
         public static Object[][] getNewOrderData() {
             return new Object[][]{
-                    {"top", "Вася", "Пупкин", "Красная площадь, д.1", "Охотный Ряд", "81111111111", "27.02.2023", 1, 0, "позвонить за час", true},
-                    {"middle", "Ян", "Ли", "2-ой кратер луны", "Курская", "+79111111111", "31.12.2024", 5, 1, "нечего сказать", true},
+                    {"top", "Вася", "Пупкин", "Красная площадь, д.1", "Охотный Ряд", "81111111111", "27.02.2023", 1, 0,
+                            "позвонить за час", true},
+                    {"middle", "Ян", "Ли", "2-ой кратер луны", "Курская", "+79111111111", "31.12.2024", 5, 1,
+                            "нечего сказать", true},
             };
         }
+
     //    Тестовый сценарий - Заказ самоката
     @Test
     public void createNewOrderTest() {
@@ -70,9 +81,9 @@ public class CreateNewOrderTestClass {
         OrderPage objOrderPage = new OrderPage(driver);
         objOrderPage.setFirstOrderForm(name, surname, address, metro, phone);
         objOrderPage.setSecondOrderForm(date, indexRentTerm, indexColor, comment);
-        System.out.println(objOrderPage.getOrderConfirmationText());
-        assertEquals(isOrderSuccess, objOrderPage.isOrderConfirmationTextDisplay());
+        MatcherAssert.assertThat(objOrderPage.getConfirmationHeaderText(), containsString("Заказ оформлен"));
     }
+
     @After
     public void teardown() {
         driver.quit();

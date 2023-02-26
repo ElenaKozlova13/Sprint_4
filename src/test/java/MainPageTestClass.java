@@ -14,14 +14,17 @@ public class MainPageTestClass {
     private WebDriver driver;
     private int indexItemFAQ;
     private String itemFAQText;
+
     public MainPageTestClass(int indexItemFAQ, String itemFAQText) {
         this.indexItemFAQ = indexItemFAQ;
         this.itemFAQText = itemFAQText;
     }
+
     @Before
     public void startUp() {
         WebDriverManager.chromedriver().setup();
     }
+
     @Parameterized.Parameters
     public static Object[][] getItemFAQ() {
         return new Object[][]{

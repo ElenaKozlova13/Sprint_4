@@ -11,16 +11,17 @@ import java.util.List;
 public class MainPage {
     private WebDriver driver;
     //кнопка "Заказать" вверху страницы
-    private By orderButtonTop = By.xpath(".//div[@class='Header_Nav__AGCXC']/button[@class='Button_Button__ra12g']");
+    private By orderButtonTop = By.xpath(".//div[@class='Header_Nav__AGCXC']" +
+            "/button[@class='Button_Button__ra12g']");
     //кнопка "Заказать" в середине страницы
-    private By orderButtonMiddle = By.xpath(".//div[@class='Home_FinishButton__1_cWm']/button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
+    private By orderButtonMiddle = By.xpath(".//div[@class='Home_FinishButton__1_cWm']" +
+            "/button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
     //Стрелочка выпадающего списка, Элемент списка "Вопросы о важном" AccordionItem id=accordion__heading-69
     private By itemFAQButton = By.className("accordion__button");
     //Скрытый текст элемента списка "Вопросы о важном" id=accordion__panel-69
     private By itemFAQText = By.xpath(".//div[@class='accordion__panel']/p");
     //Кнопка куки
     private By cookieButton = By.className("App_CookieButton__3cvqF");
-
     //кнопка "Статус заказа"
     private By orderStatusButton = By.className("Header_Link__1TAG7");
     //Поле "Номер заказа"
@@ -29,8 +30,6 @@ public class MainPage {
     private By searchOrderButton = By.className("Header_Button__28dPO");
     //логотип Яндекс
     private By logoYandexLink = By.className("Header_LogoYandex__3TSOI");
-
-
 
     //конструктор класса
     public MainPage(WebDriver driver) {

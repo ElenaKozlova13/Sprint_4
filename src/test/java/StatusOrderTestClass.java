@@ -14,13 +14,16 @@ import static org.junit.Assert.assertTrue;
 public class StatusOrderTestClass {
     private WebDriver driver;
     private String incorrectOrderNumber;
+
     public StatusOrderTestClass(String incorrectOrderNumber) {
         this.incorrectOrderNumber = incorrectOrderNumber;
     }
+
     @Before
     public void startUp() {
         WebDriverManager.chromedriver().setup();
     }
+
     @Parameterized.Parameters
     public static Object[][] getOrderNumber() {
         return new Object[][]{
@@ -29,6 +32,7 @@ public class StatusOrderTestClass {
                 {"text"},
         };
     }
+
     @Test
     public void errorIncorrectOrderNumberTest() {
         driver = new ChromeDriver();
@@ -36,7 +40,8 @@ public class StatusOrderTestClass {
         MainPage objMainPage = new MainPage(driver);
         objMainPage.searchOrderByNumber(incorrectOrderNumber);
         SearchOrderPage objSearchOrderPage = new SearchOrderPage(driver);
-        assertTrue("expected picture with error message: Точно верный заказ?", objSearchOrderPage.isIncorrectOrderNumberErrorDisplayed());
+        assertTrue("expected picture with error message: Точно верный заказ?",
+                objSearchOrderPage.isIncorrectOrderNumberErrorDisplayed());
     }
     @After
     public void teardown() {
