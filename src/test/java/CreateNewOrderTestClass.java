@@ -13,8 +13,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import static org.hamcrest.core.StringContains.containsString;
-import static org.junit.Assert.assertEquals;
-
 
 @RunWith(Parameterized.class)
 public class CreateNewOrderTestClass {
@@ -29,11 +27,10 @@ public class CreateNewOrderTestClass {
     private int indexRentTerm;
     private int indexColor;
     private String comment;
-    private boolean isOrderSuccess;
 
     public CreateNewOrderTestClass(String locationOrderButton, String name, String surname, String address,
                                    String metro, String phone, String date, int indexRentTerm, int indexColor,
-                                   String comment, boolean isOrderSuccess) {
+                                   String comment) {
         this.locationOrderButton = locationOrderButton;
         this.name = name;
         this.surname = surname;
@@ -44,7 +41,6 @@ public class CreateNewOrderTestClass {
         this.indexRentTerm = indexRentTerm;
         this.indexColor = indexColor;
         this.comment = comment;
-        this.isOrderSuccess = isOrderSuccess;
     }
 
     @Before //для запуска Chrome
@@ -65,9 +61,9 @@ public class CreateNewOrderTestClass {
         public static Object[][] getNewOrderData() {
             return new Object[][]{
                     {"top", "Вася", "Пупкин", "Красная площадь, д.1", "Охотный Ряд", "81111111111", "27.02.2023", 1, 0,
-                            "позвонить за час", true},
+                            "позвонить за час"},
                     {"middle", "Ян", "Ли", "2-ой кратер луны", "Курская", "+79111111111", "31.12.2024", 5, 1,
-                            "нечего сказать", true},
+                            "нечего сказать"},
             };
         }
 
